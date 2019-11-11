@@ -23,7 +23,7 @@ public class TransactionJobLauncher {
   }
 
   public HttpStatus launchTransactionJob() {
-    System.out.println("---------> Job launched");
+    System.out.println("Job " + job.getName() + " launched");
     try {
       jobLauncher.run(job, newExecution());
     } catch (Exception e) {

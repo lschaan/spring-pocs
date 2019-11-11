@@ -9,7 +9,6 @@ public class TransactionProcessor implements ItemProcessor<TransactionDTO, Trans
 
   @Override
   public TransactionDTO process(TransactionDTO item) {
-    System.out.println("---------> Item being processed: " + item);
     return (item.getDescription().startsWith("ab") ? item : null);
   }
 }
