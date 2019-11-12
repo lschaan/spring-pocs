@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DataSourceConfig {
 
-  public static final String DATASOURCE_URL = "jdbc:mysql://localhost:3306/batch";
-  public static final String DATASOURCE_DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
-  public static final String DATASOURCE_USERNAME = "";
-  public static final String DATASOURCE_PASSWORD = "";
+  private static final String DATASOURCE_URL = "jdbc:mysql://localhost:3306/batch";
+  private static final String DATASOURCE_DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
+  private static final String DATASOURCE_USERNAME = "";
+  private static final String DATASOURCE_PASSWORD = "";
 
   @Bean
   public DataSource dataSource() {
