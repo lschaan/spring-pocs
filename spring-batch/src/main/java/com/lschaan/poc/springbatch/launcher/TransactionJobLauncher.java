@@ -22,7 +22,6 @@ public class TransactionJobLauncher {
   }
 
   public ResponseEntity launchTransactionJob() {
-    System.out.println(job.getName() + " launched");
     try {
       jobLauncher.run(job, newExecution());
     } catch (Exception e) {
