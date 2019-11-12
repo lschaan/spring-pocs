@@ -25,7 +25,7 @@ public class TransactionWriter {
     LineAggregator<TransactionDTO> lineAggregator = createLineAggregator();
     csvFileWriter.setLineAggregator(lineAggregator);
     csvFileWriter.setResource(
-        new FileSystemResource("/home/ilegra0617/Documentos/transaction.csv"));
+        new FileSystemResource("transaction.csv"));
 
     return csvFileWriter;
   }
