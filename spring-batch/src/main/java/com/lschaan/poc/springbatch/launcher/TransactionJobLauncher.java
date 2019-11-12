@@ -6,7 +6,7 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,15 +21,15 @@ public class TransactionJobLauncher {
     this.jobLauncher = jobLauncher;
   }
 
-  public HttpStatus launchTransactionJob() {
+  public ResponseEntity launchTransactionJob() {
     System.out.println(job.getName() + " launched");
     try {
       jobLauncher.run(job, newExecution());
     } catch (Exception e) {
       e.printStackTrace();
-      return HttpStatus.INTERNAL_SERVER_ERROR;
+      return ResponseEntity.badRequest().build();
     }
-    return HttpStatus.OK;
+    return ResponseEntity.ok().build();
   }
 
   private JobParameters newExecution() {
