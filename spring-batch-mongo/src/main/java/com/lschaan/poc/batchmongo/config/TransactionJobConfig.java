@@ -1,0 +1,45 @@
+package com.lschaan.poc.batchmongo.config;
+
+import com.lschaan.poc.batchmongo.dto.TransactionDTO;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@EnableBatchProcessing
+@ComponentScan(basePackageClasses = MongoDataSourceConfig.class)
+public class TransactionJobConfig {
+
+  @Autowired private JobBuilderFactory jobs;
+  @Autowired private StepBuilderFactory steps;
+
+  @Bean
+  public Job transactionJob(@Qualifier("transactionStep") Step transactionStep) {
+    return jobs.get("transactionJob").flow(transactionStep).end().build();
+  }
+
+  @Bean
+  public Step transactionStep(
+      ItemReader<TransactionDTO> transactionDTOItemReader,
+      ItemProcessor<TransactionDTO, TransactionDTO> transactionDTOItemProcessor,
+      ItemWriter<TransactionDTO> transactionDTOItemWriter) {
+    return steps
+        .get("transactionStep")
+        .<TransactionDTO, TransactionDTO>chunk(1)
+        .reader(transactionDTOItemReader)
+        .processor(transactionDTOItemProcessor)
+        .writer(transactionDTOItemWriter)
+        .allowStartIfComplete(true)
+        .build();
+  }
+}
