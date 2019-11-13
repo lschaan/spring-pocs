@@ -19,9 +19,14 @@ public class TransactionController {
 
   @Autowired private TransactionJobLauncher transactionJobLauncher;
 
-  @GetMapping(value = "/ab")
-  public ResponseEntity<?> getAB() {
-    return transactionJobLauncher.launchTransactionJob();
+  @GetMapping(value = "/generateFile")
+  public ResponseEntity<?> generateFile() {
+    try {
+      transactionJobLauncher.launchTransactionJob();
+      return ResponseEntity.ok().build();
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().build();
+    }
   }
 
   @Bean

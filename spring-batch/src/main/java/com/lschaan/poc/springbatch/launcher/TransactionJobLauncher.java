@@ -2,11 +2,11 @@ package com.lschaan.poc.springbatch.launcher;
 
 import lombok.NoArgsConstructor;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,14 +21,8 @@ public class TransactionJobLauncher {
     this.jobLauncher = jobLauncher;
   }
 
-  public ResponseEntity launchTransactionJob() {
-    try {
-      jobLauncher.run(job, newExecution());
-    } catch (Exception e) {
-      e.printStackTrace();
-      return ResponseEntity.badRequest().build();
-    }
-    return ResponseEntity.ok().build();
+  public JobExecution launchTransactionJob() throws Exception {
+    return jobLauncher.run(job, newExecution());
   }
 
   private JobParameters newExecution() {
